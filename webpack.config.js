@@ -27,7 +27,7 @@ const config = {
     ]
   },
   output: {
-    path: path.join(__dirname, './src'),
+    path: path.join(__dirname, './dist'),
     filename: 'index.min.js',
   },
   plugins: debug ? [] : [

@@ -11,15 +11,28 @@ export default class Table extends React.Component {
 
 
   componentDidMount() {
+    this.fetchLeaderboard(this.props.urlRecent);
+    $('#th-recent').click(function(e){
+      this.fetchLeaderboard(this.props.urlRecent);
+    }.bind(this));
+    $('#th-alltime').click(function(e){
+      this.fetchLeaderboard(this.props.urlAlltime);
+    }.bind(this));
+  }
+
+  handleChange(event) {
+    this.setState({});
+  }
+
+  fetchLeaderboard(url) {
     $.ajax({
-      // TODO urlAlltime vs. urlRecent
-      // TODO Sorting
-      // TODO clickable table headers to switch between sortings
-      url: this.props.urlAlltime,
+      url: url,
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({data: data});
+        console.log(data)
+        this.setState({data});
+        console.log(this.state)
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -27,18 +40,13 @@ export default class Table extends React.Component {
     })
   }
 
-  handleChange(event) {
-    this.setState({});
-  }
-
   render() {
-    // prepare all the rows
-    console.log(this.state.data);
+    // prepare all the row elements to place inside the table later on
     var rows = [];
     var element = '';
     for(var i=0; i<this.state.data.length; i++) {
       element = this.state.data[i];
-      rows.push(<TableRow key={i} id={i} alltime={element.alltime} recent={element.recent} username={element.username} />);
+      rows.push(<TableRow key={i+1} id={i+1} alltime={element.alltime} recent={element.recent} username={element.username} />);
     }
 
 
@@ -55,8 +63,8 @@ export default class Table extends React.Component {
                   <tr>
                     <th>#</th>
                     <th>Camper Name</th>
-                    <th>Points in past 30 days</th>
-                    <th>All time points</th>
+                    <th><a href="#" id="th-recent">Points in past 30 days</a></th>
+                    <th><a href="#" id="th-alltime">All time points</a></th>
                   </tr>
                 </thead>
                 <tbody>

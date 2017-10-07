@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 
 import LeaderTable from './components/Table'
 
-const css = require('../css/style.scss');
 const app = document.getElementById('app');
 
 
